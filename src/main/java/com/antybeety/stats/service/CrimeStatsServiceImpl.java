@@ -3,6 +3,8 @@ package com.antybeety.stats.service;
 import com.antybeety.stats.model.dao.CrimeStatsDAO;
 import com.antybeety.stats.model.vo.CrimeRankedVO;
 import com.antybeety.stats.model.vo.CrimeStatsVO;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,8 @@ import java.util.List;
 public class CrimeStatsServiceImpl implements CrimeStatsService {
     @Autowired
     private CrimeStatsDAO dao;
+
+    private Log logger = LogFactory.getLog(CrimeStatsServiceImpl.class);
     public List<CrimeRankedVO> calcRank(int year, String category) {
         switch(category) {
             case "MU" :
@@ -36,14 +40,18 @@ public class CrimeStatsServiceImpl implements CrimeStatsService {
         }
         CrimeStatsVO csvo = new CrimeStatsVO();// 범죄 통계 1개
         List<CrimeRankedVO> crvo = new ArrayList<CrimeRankedVO>();// 범죄통계 + 랭크 리스트
-        List<CrimeStatsVO> csvoList = null;// 범죄통계 리스트
-        if(category.equals("ALL")){
+        List<CrimeStatsVO> csvoList = new ArrayList<CrimeStatsVO>();// 범죄통계 리스트
+
+        if(category.equals("ALL")) {
             csvoList = dao.searchStatsListByYear(year);
+            for (int i = 0; i < csvoList.size(); i++) {
+                csvoList.get(i).setName(category);
+            }
         }
         else {
-            csvoList = dao.searchStatsListByYearCategory(year, category);// year와 category 로 범죄 리스트 DB에서 불러옴
-        }
-        crvo=calculation(csvoList);
+        csvoList = dao.searchStatsListByYearCategory(year, category);// year와 category 로 범죄 리스트 DB에서 불러옴
+    }
+    crvo=calculation(csvoList);
         return crvo;
     }
 
@@ -59,6 +67,9 @@ public class CrimeStatsServiceImpl implements CrimeStatsService {
             basket.add(cr);
         }
         basket.sort(Comparator.reverseOrder());
+        for(int i=0;i<basket.size();i++){
+            basket.get(i).setRank(i+1);
+        }
 
         return basket;
     }

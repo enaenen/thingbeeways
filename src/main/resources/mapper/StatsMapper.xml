@@ -32,7 +32,7 @@
     <select id="searchStatsByAllCrime" resultMap="crime_stats" parameterType="java.lang.Integer">
         select  di_name, year, population,ifnull(occur_cnt,0) as occur_cnt, arrest_cnt,population
         from district_tb left join (select  di_name, year,sum(occur_cnt) as occur_cnt,sum(arrest_cnt) as arrest_cnt
-        from crimestats_view group by di_name, year having year=2017) as sub
+        from crimestats_view group by di_name, year having year=#{year}) as sub
         using (di_name) where di_name like '%';
     </select>
 <!--    /* SELECT * FROM member ORDER BY reg_date DESC*/
