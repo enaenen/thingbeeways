@@ -18,13 +18,10 @@ import java.util.Map;
 public class CrimeStatsDAOImpl implements CrimeStatsDAO {
     @Autowired
     private SqlSession sqlSession;
-    private Log logger = LogFactory.getLog(CrimeStatsDAOImpl.class);
 
     public List<CrimeStatsVO> searchStatsListByYear(int year){
-        logger.info("this is SEARCHING IN YEAR");
         StatsMapper mapper = sqlSession.getMapper(StatsMapper.class);
         List<CrimeStatsVO> list = mapper.searchStatsByAllCrime(year);
-        logger.info("i got crime");
         return list;
 
     }

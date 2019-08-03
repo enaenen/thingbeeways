@@ -73,11 +73,11 @@ function layer_toggle(obj) {
 			     <!--  <li><span id=mainmenu_btn>MAIN MENU</span> -->
 			     <li> <span id="mainmenu_text">메인 메뉴</span>
 			      <ul>
-			   		<li><a href="index.html" id="mainmenu-list_main" class="m1">메인</a></li>
-			    	<li><a href="map.jsp" id="mainmenu-list_map" class="m2">지도</a></li>
-			    	<li><a href="news.jsp" id="mainmenu-list_news" class="m3">뉴스</a></li>
+			   		<li><a href="/index.jsp" id="mainmenu-list_main" class="m1">메인</a></li>
+			    	<li><a href="/map" id="mainmenu-list_map" class="m2">지도</a></li>
+			    	<li><a href="/news/main" id="mainmenu-list_news" class="m3">뉴스</a></li>
 			        <li><a href="preedu.html" id="mainmenu-list_safe" class="m4">안전 가이드</a></li>
-			        <li><a href="stats.jsp" id="mainmenu-list_stats" class="m5">범죄 통계</a></li>
+			        <li><a href="/stats" id="mainmenu-list_stats" class="m5">범죄 통계</a></li>
 			    	</ul>
 			      </li>
 			    </ul>

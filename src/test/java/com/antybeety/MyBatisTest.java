@@ -13,6 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -48,5 +49,10 @@ public class MyBatisTest {
     public void 컨트롤러테스트(){
         List<CrimeRankedVO> list = service.calcRank(2017,"ALL");
         assertNotNull(list);
+    }
+    @Test
+    public void 날짜테스트(){
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        System.out.println(year);
     }
 }

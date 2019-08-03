@@ -17,7 +17,6 @@ public class CrimeStatsServiceImpl implements CrimeStatsService {
     @Autowired
     private CrimeStatsDAO dao;
 
-    private Log logger = LogFactory.getLog(CrimeStatsServiceImpl.class);
     public List<CrimeRankedVO> calcRank(int year, String category) {
         switch(category) {
             case "MU" :

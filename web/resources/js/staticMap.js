@@ -3,8 +3,8 @@ google.charts.load("current", {packages:['corechart']});
 var map;
 var markers = [];
 var alldata = new Array();
-var data16= new Array();
-var data15= new Array();
+var prev1year= new Array();
+var prev2year= new Array();
 var polygon;
 //$(".w3-sidebar w3-bar-item w3-button").click(function())
 //var selection = $(".w3-sidebar w3-bar-item w3-button").text();
@@ -69,28 +69,28 @@ var selection = function(event){
 				alldata=alldata.concat(data[x]);
 			}
 			//지도에 폴리곤으로 표시할 영역데이터 배열입니다
-			data15=data[1];
-			data16=data[2];
-			console.log(data15);
-			console.log(data16);
+			prev2year=data[1];
+			prev1year=data[2];
+			console.log(prev2year);
+			console.log(prev1year);
 			drawChart(alldata);
 
 			for (let i = 0, len = areas.length; i < len; i++) {
-				let d15;
-				let d16;
+				let prev2;
+				let prev1;
 				for(j=0;j<25;j++){
-					if(data15[j].stats.district==areas[i].name){
-						d15=data15[j];
+					if(prev2year[j].stats.district==areas[i].name){
+						prev2=prev2year[j];
 					}
 				}
 				for(j=0;j<25;j++){
-					if(data16[j].stats.district==areas[i].name){
-						d16=data16[j];
+					if(prev1year[j].stats.district==areas[i].name){
+						prev1=prev1year[j];
 					}
 				}
 				for(j=0;j<25;j++){
 					if(areas[i].name==alldata[j].stats.district){
-						displayArea(areas[i],alldata[j],d15,d16);
+						displayArea(areas[i],alldata[j],prev2,prev1);
 					}
 				}
 				ranking(alldata[i]);

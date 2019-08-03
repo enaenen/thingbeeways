@@ -11,20 +11,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/stats")
 public class APICriminalStatistics {
-    private Log logger = LogFactory.getLog(APICriminalStatistics.class);
     @Autowired
     private CriminalStatistics controller;
 
     @RequestMapping(value = "/stats",method = RequestMethod.POST)
     public List<List<CrimeRankedVO>> stats(@RequestParam(value = "crimeId") String crimeId){
+
         if(crimeId==null){
             crimeId="ALL";
         }
+        //int year = Calendar.getInstance().get(Calendar.YEAR);
         List<CrimeRankedVO> list = controller.calcRank(2017, crimeId);
         List<CrimeRankedVO> list15 = controller.calcRank(2015, crimeId);
         List<CrimeRankedVO> list16 = controller.calcRank(2016, crimeId);

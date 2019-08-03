@@ -15,7 +15,7 @@ import java.util.List;
 
 @Controller
 public class ViewCriminalStatistics {
-    @RequestMapping(value = "/stats.do", method = RequestMethod.GET)
+    @RequestMapping(value = "/stats", method = RequestMethod.GET)
     public String stats(){
         return "stats/stats";
     }
