@@ -2,9 +2,9 @@ google.charts.load("current", {packages:['corechart']});
 //google.charts.setOnLoadCallback(drawChart);
 var map;
 var markers = [];
-var alldata = new Array();
-var prev1year= new Array();
-var prev2year= new Array();
+var alldata = [];
+var prev1year= [];
+var prev2year= [];
 var polygon;
 //$(".w3-sidebar w3-bar-item w3-button").click(function())
 //var selection = $(".w3-sidebar w3-bar-item w3-button").text();
@@ -14,7 +14,7 @@ var ranking = function(infos){
 	$('<tr class="ranked">'+'<td class="rank">'+infos.rank+'</td>'+
 			'<td class="district">'+infos.stats.district+'</td>'+
 			'<td class="occurCnt">'+infos.stats.occurCnt+'</td>'+'</tr>',{}).appendTo('#rankContent > tbody');
-}
+};
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
   mapOption = { 
       center: new kakao.maps.LatLng(37.578126, 126.9546207), // 지도의 중심좌표
@@ -50,10 +50,10 @@ var setMarkers = function(map){
 	for (var i = 0; i < markers.length; i++) {
         markers[i].setMap(map);
     }
-}
+};
 var selection = function(event){
 	alldata = null;
-	alldata = new Array();
+	alldata = [];
 	$('.ranked').remove();
 	var crimeId = event.srcElement.id;
 	console.log(crimeId);
@@ -101,11 +101,11 @@ var selection = function(event){
 		error:function(jqXHR,textStatus,errorThrown){
 			alert("에러"+textStatus+":",errorThrown);
 			//self.close();
-			return;
+
 		}
 
 	});
-}
+};
 
 //다각형을 생상하고 이벤트를 등록하는 함수입니다
 var displayArea = function(area,d,d15,d16) {
@@ -161,8 +161,8 @@ var displayArea = function(area,d,d15,d16) {
 		     fillColor: ' #8AAC66',
 		     fillOpacity: 0.7 
 		 });
-		};
-		kakao.maps.event.addListener(polygon, 'mouseover', function(mouseEvent) {
+    }
+    kakao.maps.event.addListener(polygon, 'mouseover', function(mouseEvent) {
 			  // polygon.setOptions({fillColor: '#09f'});
 			   customOverlay2.setContent('<div class="area">' + area.name + '</div>');
 			   customOverlay2.setPosition(mouseEvent.latLng); 
@@ -250,25 +250,22 @@ $(document).ready(function(){
 });
 
 function closeOverlay() {//오버레이 삭제
-	infowindow.setMap(null);     
-};
+	infowindow.setMap(null);
 
-
-
-
+}
 var layer_toggle = function(obj){
         if (obj.style.display=='none') obj.style.display = 'block';
         else if (obj.style.display=='block') obj.style.display = 'none';
-}
+};
 var w3_open = function() {
 	let el=$('#mySidebar');
   	document.getElementById("mySidebar").style.display = "block";
 	el.css('margin-left','85.4px');
-}
+};
 var w3_close = function() {
 	let el=$('#mySidebar');
 	el.css('margin-left','0px');
 	  document.getElementById("mySidebar").style.display = "none";
-	}
+	};
 
 

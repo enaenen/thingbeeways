@@ -57,7 +57,7 @@
 	list-style: none;
 	float: left;
 	display: block;
-	height: -10px;
+	/*height: -10px;*/
 	box-sizing: border-box;
 	padding: 0 20px;
 }

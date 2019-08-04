@@ -6,7 +6,7 @@ var drawChart = function(infos) {
 	   var resolution = {
 	          width : window.innerWidth || document.body.clientWidth,
 	          height : window.innerWidth || document.body.clientHeight
-	        }
+	        };
 	   
 	  var data = google.visualization.arrayToDataTable([
 	    ["서울특별시", "범죄 발생 수", { role: "style" } ],
@@ -39,7 +39,7 @@ var drawChart = function(infos) {
 	  };
 	  var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
 	  chart.draw(view, options);
-	}
+	};
 var redrawChart = function(){
 	chart.draw(view, options);
-}
+};

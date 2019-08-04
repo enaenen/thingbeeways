@@ -122,7 +122,7 @@ function securityLampToggle() {
 
 $('#search_menu').click(function(){
 	$('#left_bar').addClass("open");
-})
+});
 
 $(function () {
 
@@ -154,12 +154,12 @@ var imageSize = new kakao.maps.Size(30, 40.5), // 마커이미지의 크기입�
 cctvImageSize = new kakao.maps.Size(40,42.5),
 imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
   
-var policeImageSrc = 'image/map/police_color.png'; // 마커이미지의 주소입니다    
-var cctvImageSrc = 'image/map/cctv_color.png'; // 마커이미지의 주소입니다    
-var shopImageSrc = 'image/map/shop_color.png'; // 마커이미지의 주소입니다    
-var bellImageSrc = 'image/map/bell_color.png'; // 마커이미지의 주소입니다    
-var securityLampImageSrc = 'image/map/security_lamp_color.png'; // 마커이미지의 주소입니다    
-var guardImageSrc = 'image/map/guard_color.png'; // 마커이미지의 주소입니다    
+var policeImageSrc = '/resources/image/map/police_color.png'; // 마커이미지의 주소입니다
+var cctvImageSrc = '/resources/image/map/cctv_color.png'; // 마커이미지의 주소입니다
+var shopImageSrc = '/resources/image/map/shop_color.png'; // 마커이미지의 주소입니다
+var bellImageSrc = '/resources/image/map/bell_color.png'; // 마커이미지의 주소입니다
+var securityLampImageSrc = '/resources/image/map/security_lamp_color.png'; // 마커이미지의 주소입니다
+var guardImageSrc = '/resources/image/map/guard_color.png'; // 마커이미지의 주소입니다
   
 
  
@@ -212,8 +212,8 @@ var detailList;
 
 //배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
 function setMarkers(markers, map) {
-	console.log("setMarkers");
-	console.log(markers.length);
+	// console.log("setMarkers");
+	// console.log(markers.length);
     for (var i = 0; i < markers.length; i++) {
     	markers[i].setMap(map);
     }            
@@ -238,23 +238,23 @@ function showMarkers(type) {
 		if(status == 'success')
 		{
 			var locations = JSON.parse(data);
-			var positions = new Array();
-			for (let i = 0; i < Object.keys(locations).length; i++){
+			var positions = [];
+			for (var i = 0; i < Object.keys(locations).length; i++){
 				var position = {
 				    	content : '<div>cctv!<div>',
 				        latlng: new kakao.maps.LatLng(locations[i].lat, locations[i].lng),
 						number : locations[i].number,
 						iwContent : locations[i].title
-				    }
+				    };
 				positions.push(position);
 			}
 		}
 		
 		switch(type){
-		case "cctv": cctvPositions = positions; createCctvMarkers(); console.log(cctvMarkers); setMarkers(cctvMarkers,map); map.setLevel(3); setZoomable(false); break;
+		case "cctv": cctvPositions = positions; createCctvMarkers(); console.log(cctvMarkers); setMarkers(cctvMarkers,map); map.setLevel(2); setZoomable(false); break;
 		case "police": policePositions = positions; createPoliceMarkers(); setMarkers(policeMarkers,map); break;
 		case "shop":  shopPositions = positions;  createShopMarkers();  setMarkers(shopMarkers,map); break;
-		case "securityLamp": securityLampPositions = positions; createSecurityLampMarkers();  setMarkers(securityLampMarkers,map); map.setLevel(3); setZoomable(false); break;
+		case "securityLamp": securityLampPositions = positions; createSecurityLampMarkers();  setMarkers(securityLampMarkers,map); map.setLevel(2); setZoomable(false); break;
 		case "guard": guardPositions = positions; createGuardMarkers();  setMarkers(guardMarkers,map);  break;
 		case "bell":  bellPositions = positions;  createBellMarkers();  setMarkers(bellMarkers,map); break;
 		}
@@ -290,19 +290,20 @@ function makeClickListener(marker){
 	return function() {
 		console.log(marker.getTitle());
 		
-		$.ajax('moveMap.do',{
+		$.ajax('api/map/detail',{
 			type: 'GET',
+			// contentType:"application/json; charset=UTF-8",
 			data: {
-				number : marker.getTitle()
+				code : marker.getTitle()
 				}
 		}).then(function(data,status){
 			if(status == 'success')
 			{
-				var detail = JSON.parse(data);
-				var adminName = detail.adminName;
-				var roadAddr = detail.roadAddr;
-				var landAddr = detail.landAddr;
-				var adminTel = detail.adminTel;
+				console.log(data);
+				var adminName = data.adminName;
+				var roadAddr = data.roadAddr;
+				var landAddr = data.landAddr;
+				var adminTel = data.adminTel;
 				
 				if(adminTel == null) { adminTel =""; }
 				
@@ -328,71 +329,72 @@ function makeClickListener(marker){
 
 function searchNewPlaces() {
 	 var center = map.getCenter();
-	 console.log(center);
 	 var level = map.getLevel();
 	var bounds = map.getBounds();
 	// 영역의 남서쪽 좌표를 얻어옵니다 
    var swLatLng = bounds.getSouthWest(); 
    
    // 영역의 북동쪽 좌표를 얻어옵니다 
-   var neLatLng = bounds.getNorthEast();   
+   var neLatLng = bounds.getNorthEast();
    var json = JSON.stringify(bounds);
    var facility = [ cctvFlag, bellFlag, policeFlag, shopFlag, guardFlag, securityLampFlag];
    var facilName = ["cctv","bell","police","shop","guard","light"];
    var fn = JSON.stringify(facilName);
    var fa = JSON.stringify(facility);
-	$.ajax('moveMap.do',{
+	$.ajax('api/map/search',{
 		type: 'POST',
+		dataType:"json",
 		data: {
 			bounds:json,
-			facility : fa,
-			facilName : fn
+		facilFlag : fa,
+		facilName : fn
 		}
 	}).then(function(data,status){
 		if(status == 'success')
 		{
-			var list = JSON.parse(data);
-			
-			for (var i = 0; i < Object.keys(list).length; i++){
-				var temp = list[i].data;
-				if(temp.length == 1) {continue;}
+			console.log(data); // data = List<Map<String,Object>> 리턴됨,
+
+			for (var i = 0; i < data.length; i++){
+				var temp = data[i].data;
+				// console.log(temp);
+				// if(temp.length == 1) {continue;}
 				var positions=[];
-				for(var j=1; j<temp.length; j++){
+				for(var j=0; j<temp.length; j++){
 					var posi = {
 							number : temp[j].code,
 //							title : temp[j].title,
 							latlng : new kakao.maps.LatLng(temp[j].lat, temp[j].lng)
-					}
+					};
 					positions.push(posi);
 				}
-				console.log(positions.length);
-				switch(list[i].name){
+				// console.log(positions.length);
+				switch(data[i].name){
 				case "cctv": 
 						console.log("cctv");
 						cctvPositions = [];
 						cctvPositions = positions;
 						createCctvMarkers();
-						setMarkers(cctvMarkers,map); map.setLevel(3); setZoomable(false); 
+						setMarkers(cctvMarkers,map); map.setLevel(2); setZoomable(false); 
 					break;
 				case "bell":
 							console.log("bell");
 							bellPositions = [];
 							bellPositions = positions;
-							console.log(bellPositions.length);
+							// console.log(bellPositions.length);
 							createBellMarkers();
-							setMarkers(bellMarkers,map); map.setLevel(3); setZoomable(false); 
+							setMarkers(bellMarkers,map); map.setLevel(2); setZoomable(false); 
 					break;
 				case "guard": guardPositions = [];
 							guardPositions = positions;
 							createGuardMarkers();
 					break;
 				case "shop" : shopPositions = [];
-							shopPositions = (positions); map.setLevel(3); setZoomable(false); 
+							shopPositions = (positions); map.setLevel(2); setZoomable(false); 
 							createShopMarkers();
 					break;
 				case "light" : cctvPositions = [];
 							securityLampPositions = (positions);
-							createSecurityLampMarkers(); map.setLevel(3); setZoomable(false); 
+							createSecurityLampMarkers(); map.setLevel(2); setZoomable(false); 
 					break;
 				case "police": policePositions = [];
 							policePositions = (positions);
@@ -428,16 +430,14 @@ $(function () {
 	    $('#security').animate({
 	      'bottom': '-102px'
 	    }, 150, 'linear', function () {
-	      ;
-	    });
+        });
 	  }
 		  
 	  function openSecurity() {
 	    $('#security').animate({
 	      'bottom': '0'
 	    }, 150, 'linear', function () {
-	      ;
-	    });
+        });
 	  }
 	  $("#security_menu").on("click", function () {
 	    return (this.tog ^= 1) ? openSecurity() : closeSecurity();
@@ -455,9 +455,9 @@ var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
 // 키워드 검색을 요청하는 함수입니다
 function searchPlaces() {
-	console.log(keyword);
-    var keyword = document.getElementById('keyword').value;
 
+    var keyword = document.getElementById('keyword').value;
+	console.log(keyword);
     if (!keyword.replace(/^\s+|\s+$/g, '')) {
         alert('키워드를 입력해주세요!');
         return false;
@@ -515,12 +515,12 @@ function placesSearchCB(data, status, pagination) {
     } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
 
         alert('검색 결과가 존재하지 않습니다.');
-        return;
+
 
     } else if (status === kakao.maps.services.Status.ERROR) {
 
         alert('검색 결과 중 오류가 발생했습니다.');
-        return;
+
 
     }
 }
@@ -577,7 +577,7 @@ function displayPlaces(places) {
 
     // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
     listEl.appendChild(fragment);
-    menuEl.scrollTop = 0;
+    // menuEl.scrollTop = 0;
 
     // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
 //    map.setBounds(bounds);
@@ -993,7 +993,7 @@ $(document).ready(function(){
 	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 	var options = { //지도를 생성할 때 필요한 기본 옵션
 		center : new kakao.maps.LatLng(37.49893267508434, 127.02673400572665), //지도의 중심좌표.
-		level : 3
+		level : 2
 	//지도의 레벨(확대, 축소 정도)
 	};
 	map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
@@ -1007,6 +1007,8 @@ $(document).ready(function(){
 			detailList.close();
 		}
 	});
+	map.setMinLevel(1);
+	map.setMaxLevel(4);
 	//////////////////////////////////////////////
 	
 	// 지도에 idle 이벤트를 등록합니다 지도 이동할때 발생하는 이벤트
@@ -1041,5 +1043,5 @@ $(document).ready(function(){
 			$('#searchForm').removeClass("open");
 		}
 	});
-})
+});
 

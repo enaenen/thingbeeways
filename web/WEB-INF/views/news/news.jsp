@@ -63,7 +63,7 @@ function layer_toggle(obj) {
 					'</ul>'+
 				'</div>'+
 			'</div>',{}).appendTo('#main_center_wrap');
-	}
+	};
 	
 	var initNews = function(){
 
@@ -82,14 +82,14 @@ function layer_toggle(obj) {
 				for(let i = 0;i < Object.keys(datas).length; i++){
 					
 					if(i != 0){
-						indexNum=Number($("#main_center_wrap").children(":last").find('input[type=hidden]').val())+1;;
+						indexNum = Number($("#main_center_wrap").children(":last").find('input[type=hidden]').val()) + 1;
 					}
 					
 					addArticle(datas[i], indexNum);
 				}
 			}
 		});
-	}
+	};
 	
 	$(window).scroll(function(){
 		var scrollHeight=$(window).scrollTop()+$(window).height();
@@ -111,7 +111,7 @@ function layer_toggle(obj) {
 		else {
 			$('#detail_search').css("display","none");
 		}
-	}
+	};
 	
 	var getMoreArticles = function(){
 		var lastArticleCode = $("#main_center_wrap").children(":last").find('button[name=findid]').attr('id');
@@ -133,7 +133,7 @@ function layer_toggle(obj) {
 				}
 			}
 		});
-	}
+	};
 	
 	var showDistrictImg = function(event){
 		var imgId = $(event.srcElement).val();
@@ -147,7 +147,7 @@ function layer_toggle(obj) {
 		else {
 			$("#"+imgId).css("display","none");
 		}
-	}
+	};
 	
 	
 	var linkPage = function(event){
@@ -163,11 +163,11 @@ function layer_toggle(obj) {
 		}).then(function(data,status){
 			console.log(status);
 		});
-	}
+	};
 	
 	String.prototype.isEmpty = function(){
 	      return (this.trim() == '');
-	}
+	};
 	
 	var searchArticle  = function(){
 		
@@ -177,7 +177,7 @@ function layer_toggle(obj) {
 		
 		var go = "/news/newsSearchPage?searchWord="+searchWord+"&district="+district+"&date="+date;
 		location.href=go;
-	}
+	};
 	
 	var clickKeyword = function	(clicked_id) {
 		var searchWord =$("#"+clicked_id).val();
@@ -216,7 +216,7 @@ function layer_toggle(obj) {
 			     <li> <span id="mainmenu_text">메인 메뉴</span>
 			      <ul>
 			   		<li><a href="/index.jsp" id="mainmenu-list" class="m1">메인</a></li>
-			    	<li><a href="map.jsp" id="mainmenu-list" class="m2">지도</a></li>
+			    	<li><a href="/map" id="mainmenu-list" class="m2">지도</a></li>
 			    	<li><a href="/news/main" id="mainmenu-list" class="m3">뉴스</a></li>
 			        <li><a href="preedu.html" id="mainmenu-list" class="m4">안전 가이드</a></li>
 			        <li><a href="/stats" id="mainmenu-list" class="m5">범죄 통계</a></li>

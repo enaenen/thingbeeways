@@ -51,7 +51,7 @@
 							<input class="form-control mr-sm-2" type="text"
 								placeholder="Search" id="keyword">
 						</form>
-						<div style="width:48.85; height:'24.8; margin-top:5px;">
+						<div style="margin-top:5px;">
 							<button class="btn btn-secondary my-2 my-sm-0"
 								onclick="searchPlaces();">Search</button>
 						</div>
