@@ -22,4 +22,24 @@
         <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
     </bean>
 
+
+    <!-- 오라클 -->
+
+    <bean id="dataSource_oracle" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:oracle:thin:@192.168.30.216:1521:xe"/>
+        <property name="username" value="abty"/>
+        <property name="password" value="roal123"/>
+    </bean>
+    <!--dataSource 에서 Connection 에 대한 내용 필요-->
+    <bean id="sqlSessionFactory_oracle" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource_oracle"/>
+        <property name="mapperLocations" value="classpath:mapper/MapMapper.xml"/>
+    </bean>
+    <!--MemberDAO 에서 sqlSession AutoWired-->
+    <bean id="sqlSession_oracle" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory_oracle"/>
+    </bean>
+
+
 </beans>

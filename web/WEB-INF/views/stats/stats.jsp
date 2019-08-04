@@ -84,7 +84,7 @@ function layer_toggle(obj) {
 			    </div>
 				</li>
 			
-				<li><a class="codrops-icon codrops-icon-prev" href="index.html"><span>THINK BEE WAY</span></a></li>
+				<li><a class="codrops-icon codrops-icon-prev" href="/index.jsp"><span>THINK BEE WAY</span></a></li>
 			</ul>
 		</div><!-- /container -->
 		<script src="/resources/js/classie.js"></script>

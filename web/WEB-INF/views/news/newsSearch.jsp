@@ -214,8 +214,8 @@ v<%@ page language="java" contentType="text/html; charset=UTF-8"
 			     <!--  <li><span id=mainmenu_btn>MAIN MENU</span> -->
 			     <li> <span id="mainmenu_text">메인 메뉴</span>
 			      <ul>
-					  <li><a href="index.html" id="mainmenu-list" class="m1">메인</a></li>
-					  <li><a href="map.jsp" id="mainmenu-list" class="m2">지도</a></li>
+					  <li><a href="/index.jsp" id="mainmenu-list" class="m1">메인</a></li>
+					  <li><a href="/map" id="mainmenu-list" class="m2">지도</a></li>
 					  <li><a href="/news/main" id="mainmenu-list" class="m3">뉴스</a></li>
 					  <li><a href="preedu.html" id="mainmenu-list" class="m4">안전 가이드</a></li>
 					  <li><a href="/stats" id="mainmenu-list" class="m5">범죄 통계</a></li>
@@ -248,7 +248,7 @@ v<%@ page language="java" contentType="text/html; charset=UTF-8"
 	 		  
 	 		  
 	 		  
-				<li><a class="codrops-icon codrops-icon-prev" href="index.html"><span>THINK BEE WAY</span></a></li>
+				<li><a class="codrops-icon codrops-icon-prev" href="/index.jsp"><span>THINK BEE WAY</span></a></li>
 			</ul>
 		</div><!-- /container -->
 		<script src="/resources/js/classie.js"></script>

@@ -15,7 +15,7 @@
 <body bgcolor="#055A8A" onContextmenu = "return false" ondragstart = "return false" onSelectstart = "return false">
 
 
-<div class="center" height:auto;">
+<div class="center" height:auto;>
 <video id="videobcg" preload="auto" autoplay="true" loop="loop" muted="muted" volume="0">
   <source src="/resources/image/index/indexMov.mp4" type="video/mp4">
   <source src="movie.webm" type="video/webm">
@@ -23,7 +23,7 @@
 </video>
 
 <button name="test" type="button" onclick="location.href='/news/main'" style=" opacity:0; height:31%; width:12%; cursor:hand; position:absolute; top:57%; left:47%; z-index:10001"/>
-<button name="test" type="button" onclick="location.href='/stats'" style="opacity:0; height:28%; width:13%; cursor:hand; position:absolute; top:54%; left:59%; z-index:10001"/>
+<button name="test" type="button" onclick="location.href='/map'" style="opacity:0; height:28%; width:13%; cursor:hand; position:absolute; top:54%; left:59%; z-index:10001"/>
 
   </div>
 
@@ -42,6 +42,7 @@
     z-index: -1000;
     overflow: hidden;
     transform: translateX(0%) translateY(0%);
+  }
   body{
     background-color: black;
   }
