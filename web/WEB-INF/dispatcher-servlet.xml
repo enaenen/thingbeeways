@@ -15,5 +15,4 @@
         <property name="suffix" value=".jsp"/>
     </bean>
     <import resource="mybatis-config.xml"></import>
-
 </beans>

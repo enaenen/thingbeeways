@@ -2,6 +2,7 @@ package com.antybeety.map.model.dao;
 
 import com.antybeety.map.mybatis.MapMapper;
 import com.antybeety.map.model.vo.FacilityMarkVO;
+import com.sun.javaws.IconUtil;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -19,7 +20,10 @@ public class ConvenienceMarkDAO extends FacilityMarkDAOImpl{
     public List<FacilityMarkVO> searchFacilities(Map<String,Object> bounds) {
 
         MapMapper mapper = sqlSession_oracle.getMapper(MapMapper.class);
-        return mapper.selectConvenience(bounds);
+        List<FacilityMarkVO> list = mapper.selectConvenience(bounds);
+
+        System.out.println(list);
+        return list;
     }
 
     @Override

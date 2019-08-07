@@ -18,4 +18,8 @@ public interface NewsService {
 
     /*필터 기사 검색 + 구역*/
     public List<ArticleInfoVO> searchArticles(String searchWord, String lastArtiCode, String lastDate, String district, int cnt);
+
+
+
+
 }

@@ -15,7 +15,10 @@ public class ConvenienceDetailDAO  extends  FacilityDetailDAOImpl{
     @Override
     public FacilityDetailVO searchDetail(String code) {
         MapMapper mapper = sqlSession_oracle.getMapper(MapMapper.class);
-        return mapper.getConvenienceDetail(code);
+        FacilityDetailVO vo = mapper.getConvenienceDetail(code);
+
+        System.out.println(vo.toString());
+        return vo;
     }
     @Override
     public String getFacilName() {

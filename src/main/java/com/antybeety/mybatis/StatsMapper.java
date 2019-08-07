@@ -1,9 +1,9 @@
 package com.antybeety.mybatis;
 
-import com.antybeety.stats.model.vo.CrimeStatsVO;
+        import com.antybeety.stats.model.vo.CrimeStatsVO;
 
-import java.util.List;
-import java.util.Map;
+                import java.util.List;
+                import java.util.Map;
 
 public interface StatsMapper {
     List<CrimeStatsVO> searchStatsByAllCrime(int year);

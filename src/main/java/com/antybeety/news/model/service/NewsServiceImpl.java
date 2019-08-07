@@ -57,7 +57,6 @@ public class NewsServiceImpl implements NewsService{
             startTime = dao.searchArticleTimeByCode(lastArtiCode);
         }
 
-
         if (lastDate.equals("")) {        //마지막 시간이 존재하지 않을 경우 -> 마지막 시간 필터 사용X
             lastDate = "1990-00-00 00:00:00";
         } else {

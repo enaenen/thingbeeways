@@ -20,6 +20,7 @@
     <resultMap id="Convenience_map" type="com.antybeety.map.model.vo.ConvenienceMarkVO">
         <id property="code" column="CS_CODE" jdbcType="VARCHAR" />
         <id property="lat" column="LAT" jdbcType="NUMERIC" />
+        <id property="lng" column="LNG" jdbcType="NUMERIC" />
     </resultMap>
 
     <resultMap id="Light_map" type="com.antybeety.map.model.vo.LightMarkVO">
@@ -68,11 +69,11 @@
     </resultMap>
 
     <resultMap id="convenience_detail" type="com.antybeety.map.model.vo.ConvenienceDetailVO">
-        <id property="code" column = "cs_code" jdbcType="VARCHAR"/>
-        <id property="roadAddr" column = "road_addr" jdbcType="VARCHAR"/>
-        <id property="landAddr" column = "land_addr" jdbcType="VARCHAR"/>
-        <id property="adminName" column = "cs_admin_name" jdbcType="VARCHAR"/>
-        <id property="adminTel" column = "cs_admin_tel" jdbcType="VARCHAR"/>
+        <id property="code" column = "CS_CODE" jdbcType="VARCHAR"/>
+        <id property="roadAddr" column = "ROAD_ADDR" jdbcType="VARCHAR"/>
+        <id property="landAddr" column = "LAND_ADDR" jdbcType="VARCHAR"/>
+        <id property="adminName" column = "NAME" jdbcType="VARCHAR"/>
+        <id property="adminTel" column = "CS_TEL" jdbcType="VARCHAR"/>
     </resultMap>
 
 
@@ -88,7 +89,7 @@
     </select>
 
     <select id="selectConvenience" parameterType="hashmap" resultMap="Convenience_map">
-        SELECT cs_code, lat, lng FROM cs_mark_view where (lat between #{la} and #{ka} )AND(lng between #{ea} and #{ja})
+        SELECT cs_code, lat, lng FROM CS_MARK_VIEW where (lat between #{la} and #{ka} )AND(lng between #{ea} and #{ja})
     </select>
 
     <select id="selectCCTV" parameterType="hashmap" resultMap="CCTV_map">
@@ -116,8 +117,8 @@
         SELECT li_code, road_addr, land_addr, li_admin_name, li_admin_tel FROM light_detail_view where li_code = #{code}
     </select>
 
-    <select id="getConvenienceDetail" resultMap="convenience_detail">
-        SELECT cs_code, road_addr, land_addr, cs_admin_name, cs_admin_tel FROM cs_detail_view where cs_code = #{code}
+    <select id="getConvenienceDetail" parameterType="java.lang.String" resultMap="convenience_detail">
+        SELECT cs_code, road_addr, land_addr, name, cs_tel FROM CS_DETAIL_VIEW where CS_CODE = #{code}
     </select>
 
 </mapper>

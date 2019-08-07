@@ -3,6 +3,7 @@ package com.antybeety.map.model.service;
 import com.antybeety.map.model.dao.FacilityDetailDAO;
 import com.antybeety.map.model.dao.FacilityDetailDAOImpl;
 import com.antybeety.map.model.vo.FacilityDetailVO;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -21,6 +22,7 @@ public class FacilityDetailService {
 
         for(FacilityDetailDAO f : fd){
             if(f.getFacilName().equals(type)){
+                System.out.println(f.getFacilName());
                 return f.searchDetail(code);
             }
         }

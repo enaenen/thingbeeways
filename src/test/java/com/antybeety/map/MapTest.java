@@ -1,6 +1,9 @@
-package com.antybeety;
+package com.antybeety.map;
 
 
+import com.antybeety.map.controller.FacilityController;
+import com.antybeety.map.model.dao.ConvenienceDetailDAO;
+import com.antybeety.map.model.dao.ConvenienceMarkDAO;
 import com.antybeety.stats.model.dao.CrimeStatsDAO;
 import com.antybeety.stats.model.vo.CrimeRankedVO;
 import com.antybeety.stats.model.vo.CrimeStatsVO;
@@ -16,6 +19,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -26,33 +30,26 @@ import static org.junit.Assert.assertNotNull;
         "file:web/WEB-INF/mybatis-config.xml"
 })
 @WebAppConfiguration
-public class MyBatisTest {
-    /*@Autowired
-    private CrimeStatsDAO dao;*/
+public class MapTest {
+
     @Autowired
-    private CrimeStatsService service;
-/*    @Test
-    public void testing(){
-        List<CrimeStatsVO> list=dao.searchStatsListByYear(2017);
-        assertNotNull("list는 null이면 안됩니다.",list);
-        System.out.println(list);
-        assertFalse("검색 결과 없음",list.isEmpty());
+    private ConvenienceMarkDAO dao;
+
+    @Autowired
+    private ConvenienceDetailDAO list;
+
+    @Test
+    public void 시설물테스트(){
+        Map<String, Object> map = new HashMap<>();
+        map.put("la",37.0);
+        map.put("ka",37.5);
+        map.put("ea",127.0);
+        map.put("ja",127.5);
+        System.out.println(dao.searchFacilities(map));
     }
+
     @Test
-    public void testing2(){
-        List<CrimeStatsVO> list=dao.searchStatsListByYearCategory(2017,"폭력");
-        assertNotNull("list는 null이면 안됩니다.",list);
-        System.out.println(list);
-        assertFalse("검색 결과 없음",list.isEmpty());
-    }*/
-    @Test
-    public void 컨트롤러테스트(){
-        List<CrimeRankedVO> list = service.calcRank(2017,"ALL");
-        assertNotNull(list);
-    }
-    @Test
-    public void 날짜테스트(){
-        int year = Calendar.getInstance().get(Calendar.YEAR);
-        System.out.println(year);
+    public void 상세정보테스트(){
+        System.out.println(list.searchDetail("CS3876"));
     }
 }

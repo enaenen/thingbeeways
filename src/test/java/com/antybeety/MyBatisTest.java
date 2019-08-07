@@ -1,6 +1,8 @@
 package com.antybeety;
 
 
+import com.antybeety.map.controller.FacilityController;
+import com.antybeety.map.model.dao.ConvenienceMarkDAO;
 import com.antybeety.stats.model.dao.CrimeStatsDAO;
 import com.antybeety.stats.model.vo.CrimeRankedVO;
 import com.antybeety.stats.model.vo.CrimeStatsVO;
@@ -16,6 +18,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -54,5 +57,16 @@ public class MyBatisTest {
     public void 날짜테스트(){
         int year = Calendar.getInstance().get(Calendar.YEAR);
         System.out.println(year);
+    }
+
+    @Test
+    public void 시설물테스트(){
+        ConvenienceMarkDAO dao = new ConvenienceMarkDAO();
+        Map<String, Object> map = new HashMap<>();
+        map.put("la",37.0);
+        map.put("ka",37.5);
+        map.put("ea",127.0);
+        map.put("ja",127.5);
+        System.out.println(dao.searchFacilities(map));
     }
 }
