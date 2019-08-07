@@ -27,7 +27,6 @@ function cctvToggle() {
 	console.log(cctvFlag & bellFlag & securityLampFlag);
 	if((cctvFlag & bellFlag & securityLampFlag) == 0){
 		console.log("줌 트루");
-		setZoomable(true);
 	}
 }
 
@@ -109,11 +108,9 @@ function securityLampToggle() {
 		hideMarkers("securityLamp");
 	}
 	if(cctvFlag == 0 && securityLampFlag == 0){
-		setZoomable(true);
 	}
 	if((cctvFlag & bellFlag & securityLampFlag) == 0){
 		console.log("줌 트루");
-		setZoomable(true);
 	}
 
 }
@@ -214,6 +211,7 @@ var detailList;
 function setMarkers(markers, map) {
 	// console.log("setMarkers");
 	// console.log(markers.length);
+	console.log(marekrs.length);
     for (var i = 0; i < markers.length; i++) {
     	markers[i].setMap(map);
     }            
@@ -251,10 +249,10 @@ function showMarkers(type) {
 		}
 		
 		switch(type){
-		case "cctv": cctvPositions = positions; createCctvMarkers(); console.log(cctvMarkers); setMarkers(cctvMarkers,map); map.setLevel(2); setZoomable(false); break;
+		case "cctv": cctvPositions = positions; createCctvMarkers(); console.log(cctvMarkers); setMarkers(cctvMarkers,map); map.setLevel(2); break;
 		case "police": policePositions = positions; createPoliceMarkers(); setMarkers(policeMarkers,map); break;
 		case "shop":  shopPositions = positions;  createShopMarkers();  setMarkers(shopMarkers,map); break;
-		case "securityLamp": securityLampPositions = positions; createSecurityLampMarkers();  setMarkers(securityLampMarkers,map); map.setLevel(2); setZoomable(false); break;
+		case "securityLamp": securityLampPositions = positions; createSecurityLampMarkers();  setMarkers(securityLampMarkers,map); map.setLevel(2); break;
 		case "guard": guardPositions = positions; createGuardMarkers();  setMarkers(guardMarkers,map);  break;
 		case "bell":  bellPositions = positions;  createBellMarkers();  setMarkers(bellMarkers,map); break;
 		}
@@ -338,7 +336,7 @@ function searchNewPlaces() {
    var neLatLng = bounds.getNorthEast();
    var json = JSON.stringify(bounds);
    var facility = [ cctvFlag, bellFlag, policeFlag, shopFlag, guardFlag, securityLampFlag];
-   var facilName = ["cctv","bell","police","shop","guard","light"];
+   var facilName = ["cctv","bell","police","convenience"/*shop*/,"guard","light"];
    var fn = JSON.stringify(facilName);
    var fa = JSON.stringify(facility);
 	$.ajax('api/map/search',{
@@ -352,13 +350,13 @@ function searchNewPlaces() {
 	}).then(function(data,status){
 		if(status == 'success')
 		{
-			console.log(data); // data = List<Map<String,Object>> 리턴됨,
+			// console.log(data); // data = List<Map<String,Object>> 리턴됨,
 
 			for (var i = 0; i < data.length; i++){
 				var temp = data[i].data;
-				// console.log(temp);
 				// if(temp.length == 1) {continue;}
 				var positions=[];
+				if(temp == null ) { continue;}
 				for(var j=0; j<temp.length; j++){
 					var posi = {
 							number : temp[j].code,
@@ -374,7 +372,7 @@ function searchNewPlaces() {
 						cctvPositions = [];
 						cctvPositions = positions;
 						createCctvMarkers();
-						setMarkers(cctvMarkers,map); map.setLevel(2); setZoomable(false); 
+						setMarkers(cctvMarkers,map); map.setLevel(2);
 					break;
 				case "bell":
 							console.log("bell");
@@ -382,23 +380,24 @@ function searchNewPlaces() {
 							bellPositions = positions;
 							// console.log(bellPositions.length);
 							createBellMarkers();
-							setMarkers(bellMarkers,map); map.setLevel(2); setZoomable(false); 
+							setMarkers(bellMarkers,map); map.setLevel(2);
 					break;
 				case "guard": guardPositions = [];
 							guardPositions = positions;
 							createGuardMarkers();
 					break;
-				case "shop" : shopPositions = [];
-							shopPositions = (positions); map.setLevel(2); setZoomable(false); 
+				case "convenience" : shopPositions = [];
+							shopPositions = positions; map.setLevel(2);
 							createShopMarkers();
+							setMarkers(shopMarkers,map);
 					break;
 				case "light" : cctvPositions = [];
 							securityLampPositions = (positions);
-							createSecurityLampMarkers(); map.setLevel(2); setZoomable(false); 
+							createSecurityLampMarkers(); setMarkers(securityLampMarkers,map); map.setLevel(2);
 					break;
 				case "police": policePositions = [];
 							policePositions = (positions);
-							createPoliceMarkers();
+							createPoliceMarkers(); setMarkers(policeMarkers,map);
 					break;
 				}
 			}
@@ -993,7 +992,7 @@ $(document).ready(function(){
 	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 	var options = { //지도를 생성할 때 필요한 기본 옵션
 		center : new kakao.maps.LatLng(37.49893267508434, 127.02673400572665), //지도의 중심좌표.
-		level : 2
+		level : 10
 	//지도의 레벨(확대, 축소 정도)
 	};
 	map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
@@ -1008,7 +1007,7 @@ $(document).ready(function(){
 		}
 	});
 	map.setMinLevel(1);
-	map.setMaxLevel(4);
+	map.setMaxLevel(10);
 	//////////////////////////////////////////////
 	
 	// 지도에 idle 이벤트를 등록합니다 지도 이동할때 발생하는 이벤트
